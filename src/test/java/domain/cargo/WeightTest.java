@@ -1,4 +1,4 @@
-package domain;
+package domain.cargo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,27 +12,27 @@ class WeightTest {
 
     @BeforeEach
     public void before() {
-        weight = new Weight(234_050_345F);
+        weight = new Weight(234_050F);
     }
 
     @Test
-    void constructorTest() {
+    public void constructorTest() {
         assertThrows(IllegalArgumentException.class, () -> new Weight(-1F));
     }
 
     @Test
-    void getGramsTest() {
-        assertEquals(234_050_345F, weight.getGrams());
+    public void getGramsTest() {
+        assertEquals(234_050F, weight.getGrams());
     }
 
     @Test
-    void getKiloTest() {
-        assertEquals(234_050.345F, weight.getKilo());
+    public void getKiloTest() {
+        assertEquals(234.050F, weight.getKilo());
     }
 
     @Test
-    void getTonTest() {
-        assertEquals(234.050_345F, weight.getTon());
+    public void getTonTest() {
+        assertEquals(0.234_050F, weight.getTon());
     }
 
 }
