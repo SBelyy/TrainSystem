@@ -17,15 +17,7 @@ public class Age {
     }
 
     public static Age valueOf(int age) {
-        byte byteAge = (byte) age;
-        final Age fromPool = agesPool.get(byteAge);
-        if (fromPool != null) {
-            return fromPool;
-        }
-        final Age newAge = new Age(byteAge);
-        agesPool.put(byteAge, newAge);
-
-        return newAge;
+        return agesPool.computeIfAbsent((byte) age, Age::new);
     }
 
     public int intValue() {

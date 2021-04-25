@@ -8,21 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class PassengerTest {
 
     @Test
-    public void settersTest() {
-        Ticket ticket = new Ticket(2, TicketType.DISCOUNT);
-        Passenger passenger = new Passenger("Sashko", "Belly",
-                Age.valueOf(23), ticket);
+    public void addTicketTest() {
+        Ticket ticketOne = new Ticket(1, TicketType.REGULAR);
+        Passenger passenger = new Passenger("Vasia", "Pupkin",
+                Age.valueOf(18), ticketOne);
 
-        assertEquals(23, passenger.getAge().intValue());
-        assertEquals(ticket, passenger.getTicket());
+        Ticket ticketTwo = new Ticket(1, TicketType.REGULAR);
+        passenger.addTicket(ticketTwo);
 
-        Ticket newTicket = new Ticket(3, TicketType.REGULAR);
-        Age newAge = Age.valueOf(24);
-        passenger.setTicket(newTicket);
-        passenger.setAge(newAge);
-
-        assertEquals(24, passenger.getAge().intValue());
-        assertEquals(newTicket, passenger.getTicket());
+        assertTrue(passenger.getTicketList().contains(ticketOne));
+        assertTrue(passenger.getTicketList().contains(ticketTwo));
     }
 
 }

@@ -3,21 +3,26 @@ package domain.user.passenger;
 import domain.user.Age;
 import domain.user.User;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Passenger extends User {
 
-    private Ticket ticket;
+    private final List<Ticket> ticketList;
 
-    public Passenger(String firstName, String lastName, Age age, Ticket ticket) {
+    public Passenger(String firstName, String lastName, Age age, Ticket... tickets) {
         super(firstName, lastName, age);
-        this.ticket = ticket;
+        ticketList = new ArrayList<>();
+        ticketList.addAll(Arrays.asList(tickets));
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public List<Ticket> getTicketList() {
+        return new ArrayList<>(ticketList);
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+    public void addTicket(Ticket ticket) {
+        ticketList.add(ticket);
     }
 
     @Override
@@ -25,7 +30,7 @@ public class Passenger extends User {
         return "Passenger name: " + getFirstName() +
                 " " + getLastName() +
                 "\n" + getAge() +
-                "\n" + ticket;
+                "\n" + ticketList;
     }
 
 }

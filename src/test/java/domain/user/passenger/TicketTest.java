@@ -9,7 +9,6 @@ class TicketTest {
     @Test
     public void constructorTest() {
         assertThrows(IllegalArgumentException.class, () -> new Ticket(-1, TicketType.DISCOUNT));
-
     }
 
 }

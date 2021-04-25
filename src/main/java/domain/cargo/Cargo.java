@@ -31,11 +31,12 @@ public class Cargo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cargo cargo = (Cargo) o;
-        return Objects.equals(weight, cargo.weight) && typeCargo == cargo.typeCargo;
+        return number == cargo.number && Objects.equals(weight, cargo.weight) && typeCargo == cargo.typeCargo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(weight, typeCargo);
+        return Objects.hash(number, weight, typeCargo);
     }
+
 }

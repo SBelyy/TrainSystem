@@ -7,35 +7,35 @@ import static com.google.common.base.Preconditions.*;
 
 public class Ticket {
 
-    private final String numberTicket;
-    private final int numberTrain;
-    private final TicketType typeTicket;
+    private final String ticketNumber;
+    private final int waggonNumber;
+    private final TicketType ticketType;
 
-    public Ticket(int numberTrain, TicketType typeTicket) {
-        checkArgument(numberTrain > 0, "Train number must be positive");
-        this.numberTrain = numberTrain;
-        this.typeTicket = typeTicket;
-        numberTicket = UUID.randomUUID().toString();
+    public Ticket(int waggonNumber, TicketType ticketType) {
+        checkArgument(waggonNumber > 0, "The wagon number on the ticket must be positive");
+        this.waggonNumber = waggonNumber;
+        this.ticketType = ticketType;
+        ticketNumber = UUID.randomUUID().toString();
     }
 
-    public String getNumberTicket() {
-        return numberTicket;
+    public String getTicketNumber() {
+        return ticketNumber;
     }
 
-    public int getNumberTrain() {
-        return numberTrain;
+    public int getWaggonNumber() {
+        return waggonNumber;
     }
 
-    public TicketType getTypeTicket() {
-        return typeTicket;
+    public TicketType getTicketType() {
+        return ticketType;
     }
 
     @Override
     public String toString() {
         return "Ticket {" +
-                "NumberTicket = " + numberTicket +
-                ", NumberTrain = " + numberTrain +
-                ", TypeTicket = " + typeTicket +
+                "NumberTicket = " + ticketNumber +
+                ", NumberTrain = " + waggonNumber +
+                ", TypeTicket = " + ticketType +
                 '}';
     }
 
@@ -44,11 +44,11 @@ public class Ticket {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
-        return numberTrain == ticket.numberTrain && typeTicket == ticket.typeTicket;
+        return waggonNumber == ticket.waggonNumber && ticketType == ticket.ticketType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numberTrain, typeTicket);
+        return Objects.hash(waggonNumber, ticketType);
     }
 }

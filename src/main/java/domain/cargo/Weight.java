@@ -9,7 +9,7 @@ public class Weight {
     private final float value;
 
     public Weight(float weightInGrams) {
-        checkArgument(weightInGrams > 0, "Weight must be greater than 0");
+        checkArgument(weightInGrams >= 0, "Weight must be greater than 0");
         value = weightInGrams;
     }
 
@@ -25,6 +25,16 @@ public class Weight {
         return value / 1_000_000;
     }
 
+    public Weight add(Weight weight) {
+        float totalWeight = value + weight.getGrams();
+        return new Weight(totalWeight);
+    }
+
+    public Weight subtract(Weight weight) {
+        float totalWeight = value - weight.getGrams();
+        return new Weight(totalWeight);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,4 +47,5 @@ public class Weight {
     public int hashCode() {
         return Objects.hash(value);
     }
+
 }
