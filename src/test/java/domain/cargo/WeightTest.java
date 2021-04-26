@@ -21,6 +21,22 @@ class WeightTest {
     }
 
     @Test
+    public void addTest() {
+        Weight addedWeight = new Weight(50);
+        Weight totalWeight = new Weight(234_100F);
+
+        assertEquals(totalWeight, weight.add(addedWeight));
+    }
+
+    @Test
+    public void subtractTest() {
+        Weight subtractedWeight = new Weight(50);
+        Weight totalWeight = new Weight(234_000F);
+
+        assertEquals(totalWeight, weight.subtract(subtractedWeight));
+    }
+
+    @Test
     public void getGramsTest() {
         assertEquals(234_050F, weight.getGrams());
     }

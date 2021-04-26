@@ -1,7 +1,9 @@
 package domain.user.driver;
 
-import domain.user.Age;
 import domain.user.User;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 import static com.google.common.base.Preconditions.*;
 
@@ -9,9 +11,9 @@ public class TrainDriver extends User {
 
     private LicenseType typeLicense;
 
-    public TrainDriver(String firstName, String lastName, Age age, LicenseType typeLicense) {
-        super(firstName, lastName, age);
-        checkArgument(age.intValue() >= 18, "The driver's age must be > 18");
+    public TrainDriver(String firstName, String lastName, LocalDate birthday, LicenseType typeLicense) {
+        super(firstName, lastName, birthday);
+        checkArgument(getAge() >= 18, "The driver's age must be > 18");
         this.typeLicense = typeLicense;
     }
 

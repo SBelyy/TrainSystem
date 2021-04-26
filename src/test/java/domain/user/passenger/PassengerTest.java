@@ -1,7 +1,8 @@
 package domain.user.passenger;
 
-import domain.user.Age;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +12,7 @@ class PassengerTest {
     public void addTicketTest() {
         Ticket ticketOne = new Ticket(1, TicketType.REGULAR);
         Passenger passenger = new Passenger("Vasia", "Pupkin",
-                Age.valueOf(18), ticketOne);
+                LocalDate.EPOCH, ticketOne);
 
         Ticket ticketTwo = new Ticket(1, TicketType.REGULAR);
         passenger.addTicket(ticketTwo);

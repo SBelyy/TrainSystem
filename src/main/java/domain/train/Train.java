@@ -1,16 +1,21 @@
 package domain.train;
 
 import domain.train.wagon.Locomotive;
+import domain.train.wagon.PassengerWagon;
 import domain.train.wagon.Wagon;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class Train {
 
+    private final Logger logger = LoggerFactory.getLogger(Train.class);
+
     private Node firstNode;
     private Node lastNode;
-    private int trainLength;
 
+    private int trainLength;
     private int trainNumber;
 
     public Train(Locomotive locomotive, int trainNumber) {
@@ -26,33 +31,36 @@ public class Train {
     }
 
     public void addWagon(Wagon wagon) {
-        checkArgument(wagon.getClass() != Locomotive.class,
+        checkArgument(!(wagon instanceof Locomotive),
                 "A train can only have one locomotive");
 
         Node previous = lastNode;
-        previous.setCurrentWagon(wagon);
+        previous.currentWagon = wagon;
         lastNode = new Node(null, null, previous);
-        previous.setNextWagon(lastNode);
+        previous.nextWagon = lastNode;
 
         trainLength++;
         wagon.setNumber(trainLength);
+
+        logger.debug("{} added to {}", wagon, this);
     }
 
     public void removeLastWagon() {
-        final Node previous = lastNode.getPreviousElement();
-        lastNode = previous;
-        if (previous == null)
-            firstNode = null;
-        else
-            previous.nextWagon = null;
+        checkArgument(trainLength != 1,
+                "It is not possible to remove a locomotive from a train");
+
+        lastNode = lastNode.previousWagon;
+        lastNode.currentWagon = null;
+        lastNode.nextWagon = null;
+
         trainLength--;
+        logger.debug("The last wagon was removed from the {}", this);
     }
 
     public void addNewLocomotive(Locomotive locomotive) {
-        checkArgument(locomotive.getClass() == Locomotive.class,
-                "The object is not a locomotive");
         firstNode.setCurrentWagon(locomotive);
         locomotive.setNumber(1);
+        logger.debug("Added new {} to {}", locomotive, this);
     }
 
     public Wagon getWagonByNumber(int number) {
@@ -70,15 +78,30 @@ public class Train {
         return trainLength;
     }
 
+    public int getTrainNumber() {
+        return trainNumber;
+    }
+
+    public void setTrainNumber(int trainNumber) {
+        this.trainNumber = trainNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Train{" +
+                "trainNumber=" + trainNumber +
+                '}';
+    }
+
     private static class Node {
         private Wagon currentWagon;
         private Node nextWagon;
-        private Node previousElement;
+        private Node previousWagon;
 
         public Node(Wagon currentWagon, Node nextWagon, Node previousElement) {
             this.currentWagon = currentWagon;
             this.nextWagon = nextWagon;
-            this.previousElement = previousElement;
+            this.previousWagon = previousElement;
         }
 
         public Wagon getCurrentWagon() {
@@ -97,12 +120,12 @@ public class Train {
             this.nextWagon = nextWagon;
         }
 
-        public Node getPreviousElement() {
-            return previousElement;
+        public Node getPreviousWagon() {
+            return previousWagon;
         }
 
-        public void setPreviousElement(Node previousElement) {
-            this.previousElement = previousElement;
+        public void setPreviousWagon(Node previousWagon) {
+            this.previousWagon = previousWagon;
         }
 
     }

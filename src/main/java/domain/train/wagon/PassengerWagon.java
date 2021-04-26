@@ -3,37 +3,38 @@ package domain.train.wagon;
 import domain.user.passenger.Passenger;
 import domain.user.passenger.Ticket;
 import domain.user.passenger.TicketType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class PassengerWagon extends Wagon {
 
     private final int maxSeatsNumber;
-    private final List<Passenger> passengers;
-
-    private int availableSeats;
+    private final Set<Passenger> passengers;
+    private final Logger logger = LoggerFactory.getLogger(PassengerWagon.class);
 
     public PassengerWagon(int maxSeatsNumber) {
         checkArgument(maxSeatsNumber >= 0, "maxSeatsNumber must be positive");
         this.maxSeatsNumber = maxSeatsNumber;
-        availableSeats = maxSeatsNumber;
-        passengers = new ArrayList<>();
+        passengers = new HashSet<>();
     }
 
     public boolean addPassenger(Passenger passenger) {
-        checkArgument(availableSeats >= 0, "AvailableSeats must be positive");
-
-        checkArgument(availableSeats != 0, "There is no seat available");
+        checkArgument(getAvailableSeats() != 0, "There is no seat available");
 
         List<Ticket> tickets = passenger.getTicketList();
         for (Ticket ticket : tickets) {
             if (getNumber() == ticket.getWaggonNumber() &&
                     ticket.getTicketType() != TicketType.INVALID) {
                 passengers.add(passenger);
-                availableSeats--;
+                logger.debug("{} added to {}", passenger, this);
+                ticket.setTicketType(TicketType.INVALID);
                 return true;
             }
         }
@@ -42,9 +43,8 @@ public class PassengerWagon extends Wagon {
     }
 
     public void passengersGetsOut(Passenger passenger) {
-        if (passengers.contains(passenger)) {
-            passengers.remove(passenger);
-            availableSeats++;
+        if (passengers.remove(passenger)) {
+            logger.debug("{} removed from {}", passenger, this);
         }
     }
 
@@ -53,11 +53,18 @@ public class PassengerWagon extends Wagon {
     }
 
     public int getAvailableSeats() {
-        return availableSeats;
+        return maxSeatsNumber - passengers.size();
     }
 
     public List<Passenger> getPassengers() {
         return new ArrayList<>(passengers);
     }
 
+    @Override
+    public String toString() {
+        return "PassengerWagon{" +
+                "number=" + getNumber() +
+                ", maxSeatsNumber=" + maxSeatsNumber +
+                '}';
+    }
 }

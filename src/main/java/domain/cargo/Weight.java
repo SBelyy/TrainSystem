@@ -48,4 +48,10 @@ public class Weight {
         return Objects.hash(value);
     }
 
+    @Override
+    public String toString() {
+        return "Weight{" +
+                "grams=" + value +
+                '}';
+    }
 }

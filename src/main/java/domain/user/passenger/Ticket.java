@@ -9,7 +9,7 @@ public class Ticket {
 
     private final String ticketNumber;
     private final int waggonNumber;
-    private final TicketType ticketType;
+    private TicketType ticketType;
 
     public Ticket(int waggonNumber, TicketType ticketType) {
         checkArgument(waggonNumber > 0, "The wagon number on the ticket must be positive");
@@ -28,6 +28,10 @@ public class Ticket {
 
     public TicketType getTicketType() {
         return ticketType;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package domain.user.passenger;
 
-import domain.user.Age;
 import domain.user.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,8 +11,8 @@ public class Passenger extends User {
 
     private final List<Ticket> ticketList;
 
-    public Passenger(String firstName, String lastName, Age age, Ticket... tickets) {
-        super(firstName, lastName, age);
+    public Passenger(String firstName, String lastName, LocalDate birthday, Ticket... tickets) {
+        super(firstName, lastName, birthday);
         ticketList = new ArrayList<>();
         ticketList.addAll(Arrays.asList(tickets));
     }
@@ -27,10 +27,10 @@ public class Passenger extends User {
 
     @Override
     public String toString() {
-        return "Passenger name: " + getFirstName() +
+        return "Passenger{" +
+                "name=" + getFirstName() +
                 " " + getLastName() +
-                "\n" + getAge() +
-                "\n" + ticketList;
+                " age" + getAge() +
+                '}';
     }
-
 }

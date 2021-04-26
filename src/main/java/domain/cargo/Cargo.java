@@ -39,4 +39,12 @@ public class Cargo {
         return Objects.hash(number, weight, typeCargo);
     }
 
+    @Override
+    public String toString() {
+        return "Cargo{" +
+                "number=" + number +
+                " " + weight +
+                ", typeCargo=" + typeCargo +
+                '}';
+    }
 }
